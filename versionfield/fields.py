@@ -70,6 +70,3 @@ class VersionField(models.Field):
         }
         defaults.update(kwargs)
         return super().formfield(**defaults)
-
-    def __str__(self, value):
-        return str(value)
