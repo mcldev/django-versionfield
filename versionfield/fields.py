@@ -1,5 +1,4 @@
 from django.db import models
-import django
 
 from . import forms
 from .constants import DEFAULT_NUMBER_BITS
@@ -39,12 +38,8 @@ class VersionField(models.Field):
             self.number_bits
         )
 
-    if django.VERSION < (2, 0):
-        def from_db_value(self, value, expression, connection, context):
-            return self.get_from_db_value(value, expression, connection)
-    else:
-        def from_db_value(self, value, expression, connection):
-            return self.get_from_db_value(value, expression, connection)
+    def from_db_value(self, value, expression, connection):
+        return self.get_from_db_value(value, expression, connection)
 
     def get_from_db_value(self, value, expression, connection):
         """Convert data from database."""

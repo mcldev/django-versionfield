@@ -1,0 +1,44 @@
+{% load i18n sekizai_tags %}
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+
+        CURRENT_VERSION_VALUE= "{{ value }}";
+        CURRENT_VERSION_ARRAY = CURRENT_VERSION_VALUE.split(".");
+
+        $(".version-field .btn.major").click(function(){
+            new_version = [parseInt(CURRENT_VERSION_ARRAY[0]) + 1, 0, 0];
+            $("input[name={{ name }}]").val(new_version.join("."));
+        });
+        $(".version-field .btn.minor").click(function(){
+            new_version = [CURRENT_VERSION_ARRAY[0], parseInt(CURRENT_VERSION_ARRAY[1]) + 1, 0];
+            $("input[name={{ name }}]").val(new_version.join("."));
+        });
+        $(".version-field .btn.patch").click(function(){
+            new_version = [CURRENT_VERSION_ARRAY[0], CURRENT_VERSION_ARRAY[1], parseInt(CURRENT_VERSION_ARRAY[2]) + 1];
+            $("input[name={{ name }}]").val(new_version.join("."));
+        });
+    });
+</script>
+
+
+<div class="version-field form-inline">
+        <div class="btn-group" data-toggle="buttons">
+          <label class="btn btn-danger major" data-toggle="tooltip" data-placement="auto top"
+                 title="{% trans 'Major update - substantive change to results or conclusions' %}">
+            <input type="radio" name="version_option" autocomplete="off">Major
+          </label>
+          <label class="btn btn-warning minor" data-toggle="tooltip" data-placement="auto top"
+                 title="{% trans 'Minor update - minor changes or additions to results, similar conclusions' %}">
+            <input type="radio" name="version_option" autocomplete="off">Minor
+          </label>
+          <label class="btn btn-primary patch" data-toggle="tooltip" data-placement="auto top"
+                 title="{% trans 'Patch update - minor spelling or grammar corrections. No change to results or conclusions' %}">
+            <input type="radio" name="version_option" autocomplete="off">Patch
+          </label>
+        </div>
+    <div class="form-group">
+        {{ input_html }}
+    </div>
+</div>
